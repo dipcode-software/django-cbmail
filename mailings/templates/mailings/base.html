@@ -1,0 +1,12 @@
+{% load i18n staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}{{subject}}{% endblock title %}</title>
+    </head>
+    <body>
+        {% block header %}{% endblock header %}
+        {% block container %}{% endblock container %}
+        {% block footer %}{% endblock footer %}
+    </body>
+</html>

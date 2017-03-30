@@ -1,6 +1,6 @@
 from django.test import SimpleTestCase
 
-from evotemailings.mixins import MailingListMixin
+from mailings.mixins import MailingListMixin
 
 
 class MixinsTest(SimpleTestCase):

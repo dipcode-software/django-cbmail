@@ -8,8 +8,10 @@ from django.utils.html import strip_tags
 
 
 class BaseMailing(object):
-    """ TODO: add prefix support to subject """
-
+    """
+    This class represents the base of a templated email
+    TODO: add prefix support to subject
+    """
     template_name = None
     mail_cc = []
     mail_bcc = []
@@ -18,49 +20,77 @@ class BaseMailing(object):
     subject = None
 
     def get_attachments(self):
+        """ Return a list of Attachment instances """
         return []
 
     def get_context_data(self):
+        """ Return a dictionary with context to be used on template """
         return {}
 
     def get_mail_to(self, object_or_list):
+        """
+        Returns the list of emails to be used on to email field
+
+        objects_or_list can be a list of emails or a object instance
+        with the get_mailing_list method defined
+        """
         if isinstance(object_or_list, list):
             return object_or_list
         elif isinstance(object_or_list, object) and\
                 hasattr(object_or_list, 'get_mailing_list'):
             return object_or_list.get_mailing_list()
         raise ValueError('object_or_list must be object with get_mailing_list'
-                         'method defined or list instance.')
+                         ' method defined or list instance.')
 
     def get_mail_cc(self):
+        """ Returns the list of emails to be used on cc email field """
         return self.mail_cc
 
     def get_mail_bcc(self):
+        """ Returns the list of emails to be used on bcc email field """
         return self.mail_bcc
 
     def get_mail_reply_to(self):
+        """
+        Returns the email to be used on the reply to email field
+        If one is not provided it will get the DEFAULT_REPLY_TO setting
+        """
         if self.mail_reply_to:
             return self.mail_reply_to
         return settings.MAILINGS.get('DEFAULT_REPLY_TO', None)
 
     def get_mail_from(self):
+        """
+        Returns the email to be used on the from email field
+        If one is not provided it will get the Django default email setting
+        """
         if self.mail_from:
             return self.mail_from
-        return settings.get('DEFAULT_FROM_EMAIL')
+        return settings.DEFAULT_FROM_EMAIL
 
     def get_subject(self):
+        """
+        Returns the subject to be used on the subject email field
+        If one is not provided it will get the DEFAULT_SUJECT setting
+        """
         if self.subject:
             return self.subject
         return settings.MAILINGS.get('DEFAULT_SUJECT')
 
     def get_template_name(self):
+        """ Returns the template name to be used to render the email """
         return self.template_name
 
     def get_base_url(self):
+        """ Returns the base url to be used on the email """
         return settings.MAILINGS.get('BASE_URL')
 
     def send(self, object_or_list):
-        messages = list()
+        """
+        Given an object_or_list creates a EmailMultiAlternatives and
+        send it to the respective destination.
+        If Attachments exist, also adds them to the messsage.
+        """
         context = self.get_context_data()
 
         context.update(settings.MAILINGS.get('EXTRA_DATA', {}))
@@ -88,27 +118,23 @@ class BaseMailing(object):
 
         # If there is attachments attach them to the email
         for attachment in self.get_attachments():
-            msg.attach(
-                attachment.get_filename(),
-                attachment.get_contents(),
-                attachment.get_mimetype()
-            )
+            msg.attach(*attachment.get_triple())
 
-        messages.append(msg)
-
-        return get_connection().send_messages(messages)
+        return get_connection().send_messages([msg])
 
 
 class Attachment(object):
+    """ This class represents one email attachment """
     filename = None
     contents = None
     mimetype = None
 
-    def get_filename(self):
-        return self.filename
+    def __init__(self, filename, contents, mimetype, *args, **kwargs):
+        self.filename = filename
+        self.contents = contents
+        self.mimetype = mimetype
+        super(Attachment, self).__init__(*args, **kwargs)
 
-    def get_contents(self):
-        return self.contents
-
-    def get_mimetype(self):
-        return self.mimetype
+    def get_triple(self):
+        """ Returns the triple to be user when attached to message """
+        return self.filename, self.contents, self.mimetype

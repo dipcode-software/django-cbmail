@@ -1,7 +1,7 @@
-# django-maillings
+# Django maillings
 Django module to easily send templated emails
 
-# Settings
+## Settings
 To give support to this app we need to declare de following django settings:
 
     DEFAULT_FROM_EMAIL="example@example.com",

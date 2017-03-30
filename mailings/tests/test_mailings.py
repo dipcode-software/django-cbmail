@@ -1,3 +1,4 @@
+from mock import patch
 from django.test import SimpleTestCase
 
 from mailings.mailings import BaseMailing, Attachment
@@ -110,6 +111,11 @@ class MailingsSimpleTest(SimpleTestCase):
     def test_get_base_url(self):
         result = self.object.get_base_url()
         self.assertEqual(result, 'https://domain.com')
+
+    @patch('mailings.mailings.get_connection')
+    def test_get_send(self, get_connection):
+        self.object.send(['dev@unit.com'])
+        get_connection().send_messages.assert_called_once()
 
 
 class AttachmentsSimpleTest(SimpleTestCase):

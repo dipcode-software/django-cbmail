@@ -91,7 +91,6 @@ class BaseMailing(object):
         send it to the respective destination.
         If Attachments exist, also adds them to the messsage.
         """
-        messages = list()
         context = self.get_context_data()
 
         context.update(settings.MAILINGS.get('EXTRA_DATA', {}))
@@ -121,9 +120,7 @@ class BaseMailing(object):
         for attachment in self.get_attachments():
             msg.attach(*attachment.get_triple())
 
-        messages.append(msg)
-
-        return get_connection().send_messages(messages)
+        return get_connection().send_messages([msg])
 
 
 class Attachment(object):

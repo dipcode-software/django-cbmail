@@ -4,8 +4,6 @@ Django module to easily send templated emails
 # Settings
 To give support to this app we need to declare de following django settings:
 
-.. code-block:: python
-	
     DEFAULT_FROM_EMAIL="example@example.com",
 	MAILINGS={
         'DEFAULT_REPLY_TO': "examplereplyto@example.com",

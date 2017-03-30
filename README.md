@@ -17,3 +17,42 @@ To give support to this app we need to declare de following django settings:
 - **DEFAULT_SUJECT**: Default subject to be used on emails
 - **BASE_URL**: The base url of your website
 - **EXTRA_DATA**: Any extra data intended to be used on all emails (This is injected on context of template)
+
+## Install
+To install the app run :
+
+	pip install django-mailings
+	
+or add it to the list of requirements of your project.
+
+## Example usage
+Use the BaseMailing class to define your email like:
+
+	from mailings.mailings import BaseMailing
+	
+	class ExampleEmail(BaseMailing):
+	    """ """
+	    template_name = 'myapp/mails/myemail.html'
+	    subject = "Example subject of email"
+	    
+And send it using:
+
+	ExampleEmail().send(['example@example.com'])
+
+Where ['example@example.com'] is a list of emails of destination or a object with **get_mailing_list** method defined
+	    
+	 
+
+	
+## Running tests
+To run tests we use tox:
+	
+	# Run only unit tests
+	$ tox -e py27
+	# Run only flake8 tests
+	$ tox -e flake8
+	# Run only coverage tests
+	$ tox -e coverage
+	
+	# Run unit and flake
+	$ tox

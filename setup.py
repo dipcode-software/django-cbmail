@@ -1,26 +1,41 @@
 import os
+import sys
 from setuptools import find_packages, setup
 
-with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
-    README = readme.read()
+import mailings
 
-os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
+
+if sys.argv[-1] == 'publish':
+    if os.system("pip freeze | grep wheel"):
+        print("wheel not installed.\nUse `pip install wheel`.\nExiting.")
+        sys.exit()
+    if os.system("pip freeze | grep twine"):
+        print("twine not installed.\nUse `pip install twine`.\nExiting.")
+        sys.exit()
+    os.system("python setup.py sdist bdist_wheel")
+    os.system("twine upload dist/*")
+    print("You probably want to also tag the version now:")
+    print("  git tag -a {versions} -m 'version {version}'".format(version=mailings.__version__))  # NOQA
+    print("  git push --tags")
+    sys.exit()
+
 
 setup(
     name='django-mailings',
-    version='0.1.0-alpha',
+    version=mailings.__version__,
     packages=find_packages(),
     include_package_data=True,
     license='MIT',
     description='Django module to easily send templated emails.',
-    long_description=README,
     url='https://github.com/dipcode-software/django-mailings/',
     author='Dipcode',
     author_email='info@dipcode.com',
+    download_url='https://github.com/dipcode-software/django-mailings/archive/v0.1.0-beta.1.tar.gz',  # NOQA
+    keywords=['django', 'mailing', 'templating'],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
-        'Framework :: Django :: 1.10',
+        'Framework :: Django :: 1.11',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',

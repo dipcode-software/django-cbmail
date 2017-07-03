@@ -34,13 +34,20 @@ class BaseMailing(object):
         objects_or_list can be a list of emails or a object instance
         with the get_mailing_list method defined
         """
-        if isinstance(object_or_list, list):
-            return object_or_list
-        elif isinstance(object_or_list, object) and\
+        if isinstance(object_or_list, object) and\
                 hasattr(object_or_list, 'get_mailing_list'):
-            return object_or_list.get_mailing_list()
-        raise ValueError('object_or_list must be object with get_mailing_list'
-                         ' method defined or list instance.')
+            object_or_list = object_or_list.get_mailing_list()
+        elif not isinstance(object_or_list, list):
+            raise ValueError(
+                'object_or_list must be object with get_mailing_list method '
+                'defined or list instance.')
+        return self._filter_whitelist(object_or_list)
+
+    def _filter_whitelist(self, mails):
+        whitelist = settings.MAILINGS.get('WHITELIST', None)
+        if whitelist:
+            return list(set(mails) & set(whitelist))
+        return mails
 
     def get_mail_cc(self):
         """ Returns the list of emails to be used on cc email field """
@@ -104,23 +111,27 @@ class BaseMailing(object):
             self.get_template_name(), context)
         text_part = strip_tags(html_as_string)
 
-        msg = EmailMultiAlternatives(
-            self.get_subject(),
-            text_part,
-            self.get_mail_from(),
-            to=self.get_mail_to(object_or_list),
-            cc=self.get_mail_cc(),
-            bcc=self.get_mail_bcc(),
-            reply_to=self.get_mail_reply_to())
+        to = self.get_mail_to(object_or_list)
 
-        # Attach the html version of email
-        msg.attach_alternative(html_as_string, "text/html")
+        if to:
+            msg = EmailMultiAlternatives(
+                self.get_subject(),
+                text_part,
+                self.get_mail_from(),
+                to=to,
+                cc=self.get_mail_cc(),
+                bcc=self.get_mail_bcc(),
+                reply_to=self.get_mail_reply_to())
 
-        # If there is attachments attach them to the email
-        for attachment in self.get_attachments():
-            msg.attach(*attachment.get_triple())
+            # Attach the html version of email
+            msg.attach_alternative(html_as_string, "text/html")
 
-        return get_connection().send_messages([msg])
+            # If there is attachments attach them to the email
+            for attachment in self.get_attachments():
+                msg.attach(*attachment.get_triple())
+
+            return get_connection().send_messages([msg])
+        return 0
 
 
 class Attachment(object):

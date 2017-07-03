@@ -46,6 +46,7 @@ MAILINGS = {
 - **DEFAULT_FROM_EMAIL**: Default setting of Django that defines the from email
 - **DEFAULT_REPLY_TO**: Default reply to be used on emails
 - **DEFAULT_SUJECT**: Default subject to be used on emails
+- **WHITELIST**: List of valid emails to send to
 - **BASE_URL**: The base url of your website
 - **EXTRA_DATA**: Any extra data intended to be used on all emails (This is injected on context of template)
 

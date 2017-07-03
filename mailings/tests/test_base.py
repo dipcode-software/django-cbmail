@@ -72,6 +72,21 @@ class MailingsSimpleTest(SimpleTestCase):
         self.assertRaises(
             ValueError, self.object.get_mail_to, '"invalid type"')
 
+    def test_filter_whitelist(self):
+        with self.settings(MAILINGS={'WHITELIST': ['a@unit.c', 'b@unit.c']}):
+            result = self.object._filter_whitelist(['a@unit.c', 'c@unit.c'])
+        self.assertEqual(result, ['a@unit.c'])
+
+    def test_filter_whitelist_not_defined(self):
+        with self.settings(MAILINGS={}):
+            result = self.object._filter_whitelist(['a@unit.c', 'c@unit.c'])
+        self.assertEqual(result, ['a@unit.c', 'c@unit.c'])
+
+    def test_filter_whitelist_empty(self):
+        with self.settings(MAILINGS={'WHITELIST': ['a@unit.c', 'b@unit.c']}):
+            result = self.object._filter_whitelist(['c@unit.c', 'd@unit.c'])
+        self.assertEqual(result, [])
+
     def test_get_mail_cc(self):
         result = self.object.get_mail_cc()
         self.assertEqual(result, ['dev@unit.com'])

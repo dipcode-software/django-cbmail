@@ -92,12 +92,8 @@ class BaseMailing(object):
         """ Returns the base url to be used on the email """
         return settings.MAILINGS.get('BASE_URL')
 
-    def send(self, object_or_list):
-        """
-        Given an object_or_list creates a EmailMultiAlternatives and
-        send it to the respective destination.
-        If Attachments exist, also adds them to the messsage.
-        """
+    def render(self):
+        """ Return the body of the email """
         context = self.get_context_data()
 
         context.update(settings.MAILINGS.get('EXTRA_DATA', {}))
@@ -106,9 +102,18 @@ class BaseMailing(object):
             'subject': self.get_subject()
         })
 
-        # Contacts is a list of emails for now
         html_as_string = loader.render_to_string(
             self.get_template_name(), context)
+
+        return html_as_string
+
+    def send(self, object_or_list):
+        """
+        Given an object_or_list creates a EmailMultiAlternatives and
+        send it to the respective destination.
+        If Attachments exist, also adds them to the messsage.
+        """
+        html_as_string = self.render()
         text_part = strip_tags(html_as_string)
 
         to = self.get_mail_to(object_or_list)

@@ -127,6 +127,37 @@ class MailingsSimpleTest(SimpleTestCase):
         result = self.object.get_base_url()
         self.assertEqual(result, 'https://domain.com')
 
+    @patch('mailings.base.loader.render_to_string')
+    def test_render(self, render_to_string):
+        render_to_string.return_value = "dummy"
+        result = self.object.render()
+        self.assertEqual(result, "dummy")
+        render_to_string.assert_called_with(
+            self.object.get_template_name(),
+            {
+                'base_url': self.object.get_base_url(),
+                'subject': self.object.get_subject()
+            })
+
+    @patch('mailings.base.loader.render_to_string')
+    def test_render_extra_data(self, render_to_string):
+        with self.settings(MAILINGS={
+                'EXTRA_DATA': {'dummy_key': 'dummy_value'}}):
+            render_to_string.return_value = "dummy"
+            result = self.object.render()
+            self.assertEqual(result, "dummy")
+            render_to_string.assert_called_with(
+                self.object.get_template_name(),
+                {
+                    'base_url': self.object.get_base_url(),
+                    'subject': self.object.get_subject(),
+                    'dummy_key': 'dummy_value'
+                })
+
+    @patch('mailings.base.get_connection')
+    def test_get_send_empty(self, get_connection):
+        self.assertEqual(self.object.send([]), 0)
+
     @patch('mailings.base.get_connection')
     def test_get_send(self, get_connection):
         self.object.send(['dev@unit.com'])

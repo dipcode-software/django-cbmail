@@ -1,17 +1,5 @@
-import os
-import sys
-from setuptools import find_packages, setup
-
 import mailings
-
-
-if sys.argv[-1] == 'publish':
-    os.system("python setup.py sdist bdist_wheel")
-    os.system("twine upload dist/*")
-    print("You probably want to also tag the version now:")
-    print("  git tag -a {version} -m 'version {version}'".format(version=mailings.__version__))  # NOQA
-    print("  git push --tags")
-    sys.exit()
+from setuptools import find_packages, setup
 
 
 setup(

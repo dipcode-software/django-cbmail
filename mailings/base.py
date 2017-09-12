@@ -7,7 +7,7 @@ from django.template import loader
 from django.utils.html import strip_tags
 
 
-def _filter_whitelist(self, mails):
+def _filter_whitelist(mails):
         whitelist = settings.MAILINGS.get('WHITELIST', None)
         if whitelist:
             return list(set(mails) & set(whitelist))
@@ -48,7 +48,7 @@ class BaseMailing(object):
             raise ValueError(
                 'object_or_list must be object with get_mailing_list method '
                 'defined or list instance.')
-        return self._filter_whitelist(object_or_list)
+        return _filter_whitelist(object_or_list)
 
     def get_mail_cc(self):
         """ Returns the list of emails to be used on cc email field """

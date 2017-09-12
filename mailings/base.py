@@ -7,13 +7,6 @@ from django.template import loader
 from django.utils.html import strip_tags
 
 
-def _filter_whitelist(mails):
-        whitelist = settings.MAILINGS.get('WHITELIST', None)
-        if whitelist:
-            return list(set(mails) & set(whitelist))
-        return mails
-
-
 class BaseMailing(object):
     """
     This class represents the base of a templated email
@@ -34,6 +27,13 @@ class BaseMailing(object):
         """ Return a dictionary with context to be used on template """
         return {}
 
+    @staticmethod
+    def _filter_whitelist(mails):
+        whitelist = settings.MAILINGS.get('WHITELIST', None)
+        if whitelist:
+            return list(set(mails) & set(whitelist))
+        return mails
+
     def get_mail_to(self, object_or_list):
         """
         Returns the list of emails to be used on to email field
@@ -48,7 +48,7 @@ class BaseMailing(object):
             raise ValueError(
                 'object_or_list must be object with get_mailing_list method '
                 'defined or list instance.')
-        return _filter_whitelist(object_or_list)
+        return BaseMailing._filter_whitelist(object_or_list)
 
     def get_mail_cc(self):
         """ Returns the list of emails to be used on cc email field """

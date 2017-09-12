@@ -1,10 +1,17 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.template import loader
-from django.core.mail.message import EmailMultiAlternatives
 from django.core.mail import get_connection
+from django.core.mail.message import EmailMultiAlternatives
+from django.template import loader
 from django.utils.html import strip_tags
+
+
+def _filter_whitelist(self, mails):
+        whitelist = settings.MAILINGS.get('WHITELIST', None)
+        if whitelist:
+            return list(set(mails) & set(whitelist))
+        return mails
 
 
 class BaseMailing(object):
@@ -42,12 +49,6 @@ class BaseMailing(object):
                 'object_or_list must be object with get_mailing_list method '
                 'defined or list instance.')
         return self._filter_whitelist(object_or_list)
-
-    def _filter_whitelist(self, mails):
-        whitelist = settings.MAILINGS.get('WHITELIST', None)
-        if whitelist:
-            return list(set(mails) & set(whitelist))
-        return mails
 
     def get_mail_cc(self):
         """ Returns the list of emails to be used on cc email field """

@@ -146,7 +146,7 @@ class Attachment(object):
     contents = None
     mimetype = None
 
-    def __init__(self, filename, contents, mimetype, *args, **kwargs):
+    def __init__(self, filename, contents, mimetype=None, *args, **kwargs):
         self.filename = filename
         self.contents = contents
         self.mimetype = mimetype

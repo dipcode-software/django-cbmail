@@ -6,7 +6,13 @@
 
 Django module to easily send templated emails in a DRY way using classes, just like Class Based Views.
 
-## Install
+Table of contents:
+ * [How to install](#how-to-install);
+ * [Example usage](#example-usage);
+ * [Settings reference](#settings-reference);
+ * [License](#license).
+
+## How to install
 To install the app run :
 ```shell
 pip install django-mailings
@@ -30,7 +36,7 @@ ExampleEmail().send(['example@example.com'])
 ```
 Where `['example@example.com']` is a list of emails of destination or a object with `get_mailing_list` method defined
 
-## Settings
+## Settings reference
 To give support to this app we need to declare de following django settings:
 ```python
 DEFAULT_FROM_EMAIL = "example@example.com"
@@ -51,18 +57,7 @@ MAILINGS = {
 - **BASE_URL**: The base url of your website
 - **EXTRA_DATA**: Any extra data intended to be used on all emails (This is injected on context of template)
 
-## Running tests
-To run tests we use tox:
-```
-# Run only unit tests
-$ tox -e py27
 
-# Run only flake8 tests
-$ tox -e flake8
+## License
 
-# Run only coverage tests
-$ tox -e coverage
-
-# Run unit and flake
-$ tox
-```
+MIT license, see the LICENSE file. You can use obfuscator in open source projects and commercial products.

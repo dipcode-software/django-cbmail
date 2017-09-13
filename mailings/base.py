@@ -1,10 +1,11 @@
 from __future__ import unicode_literals
 
-from django.conf import settings
+from django.conf import settings as dj_settings
 from django.core.mail import get_connection
 from django.core.mail.message import EmailMultiAlternatives
 from django.template import loader
 from django.utils.html import strip_tags
+from mailings.conf import settings
 
 
 class BaseMailing(object):
@@ -29,7 +30,7 @@ class BaseMailing(object):
 
     @staticmethod
     def _filter_whitelist(mails):
-        whitelist = settings.MAILINGS.get('WHITELIST', None)
+        whitelist = settings.WHITELIST
         if whitelist:
             return list(set(mails) & set(whitelist))
         return mails
@@ -65,7 +66,7 @@ class BaseMailing(object):
         """
         if self.mail_reply_to:
             return self.mail_reply_to
-        return settings.MAILINGS.get('DEFAULT_REPLY_TO', None)
+        return settings.DEFAULT_REPLY_TO
 
     def get_mail_from(self):
         """
@@ -74,7 +75,7 @@ class BaseMailing(object):
         """
         if self.mail_from:
             return self.mail_from
-        return settings.DEFAULT_FROM_EMAIL
+        return dj_settings.DEFAULT_FROM_EMAIL
 
     def get_subject(self):
         """
@@ -83,7 +84,7 @@ class BaseMailing(object):
         """
         if self.subject:
             return self.subject
-        return settings.MAILINGS.get('DEFAULT_SUJECT')
+        return settings.DEFAULT_SUJECT
 
     def get_template_name(self):
         """ Returns the template name to be used to render the email """
@@ -91,13 +92,13 @@ class BaseMailing(object):
 
     def get_base_url(self):
         """ Returns the base url to be used on the email """
-        return settings.MAILINGS.get('BASE_URL')
+        return settings.BASE_URL
 
     def render(self):
         """ Return the body of the email """
         context = self.get_context_data()
 
-        context.update(settings.MAILINGS.get('EXTRA_DATA', {}))
+        context.update(settings.EXTRA_DATA)
         context.update({
             'base_url': self.get_base_url(),
             'subject': self.get_subject()

@@ -10,7 +10,7 @@ setup(
     description='Django module to easily send templated emails.',
     url='https://github.com/dipcode-software/django-mailings/',
     author='Dipcode',
-    author_email='info@dipcode.com',
+    author_email='team@dipcode.com',
     keywords=['django', 'mailing', 'templating'],
     classifiers=[
         'Environment :: Web Environment',

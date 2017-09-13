@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/dipcode-software/django-mailings.svg?branch=master)](https://travis-ci.org/dipcode-software/django-mailings)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d01ebbe43c684d478cacc530e44633ad)](https://www.codacy.com/app/srtabs/django-mailings?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dipcode-software/django-mailings&amp;utm_campaign=Badge_Grade)
 [![Coverage Status](https://coveralls.io/repos/github/dipcode-software/django-mailings/badge.svg?branch=master)](https://coveralls.io/github/dipcode-software/django-mailings?branch=master)
+[![BCH compliance](https://bettercodehub.com/edge/badge/dipcode-software/django-mailings?branch=master)](https://bettercodehub.com/)
 
 Django module to easily send templated emails in a DRY way using classes, just like Class Based Views.
 

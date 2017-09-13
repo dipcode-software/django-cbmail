@@ -6,8 +6,11 @@ Django maillings
 Django module to easily send templated emails in a DRY way using
 classes, just like Class Based Views.
 
-Table of contents: \* `How to install`_; \* `Example usage`_; \*
-`Settings reference`_; \* `License`_.
+Table of contents:
+ * `How to install`_;
+ * `Example usage`_;
+ * `Settings reference`_;
+ * `License`_.
 
 How to install
 --------------

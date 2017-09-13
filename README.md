@@ -4,7 +4,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d01ebbe43c684d478cacc530e44633ad)](https://www.codacy.com/app/srtabs/django-mailings?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dipcode-software/django-mailings&amp;utm_campaign=Badge_Grade)
 [![Coverage Status](https://coveralls.io/repos/github/dipcode-software/django-mailings/badge.svg?branch=master)](https://coveralls.io/github/dipcode-software/django-mailings?branch=master)
 
-Django module to easily send templated emails
+Django module to easily send templated emails in a DRY way using classes, just like Class Based Views.
 
 ## Install
 To install the app run :
@@ -39,7 +39,8 @@ MAILINGS = {
     'DEFAULT_REPLY_TO': "examplereplyto@example.com",
     'DEFAULT_SUJECT': "Example subject",
     'BASE_URL': "https://domain.com",
-    'EXTRA_DATA': {}
+    'EXTRA_DATA': {},
+    'WHITELIST': []
 }
 ```
 

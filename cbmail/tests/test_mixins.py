@@ -1,6 +1,6 @@
 from django.test import SimpleTestCase
 
-from mailings.mixins import MailingListMixin
+from cbmail.mixins import MailingListMixin
 
 
 class MixinsTest(SimpleTestCase):

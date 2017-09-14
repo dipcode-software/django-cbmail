@@ -1,14 +1,16 @@
-import django
 import sys
 
-from django.test.runner import DiscoverRunner
+import django
+
 from django.conf import settings
+from django.test.runner import DiscoverRunner
+
 
 settings.configure(
     INSTALLED_APPS=(
-        'mailings',
+        'cbmail',
     ),
-    MAILINGS={
+    CBMAIL={
         'DEFAULT_REPLY_TO': "replyto@unittest.com",
         'DEFAULT_SUJECT': "Unit test default",
         'BASE_URL': "https://domain.com",
@@ -24,6 +26,6 @@ settings.configure(
 if __name__ == "__main__":
     django.setup()
     runner = DiscoverRunner()
-    failures = runner.run_tests(['mailings'])
+    failures = runner.run_tests(['cbmail'])
     if failures:
         sys.exit(failures)

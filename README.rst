@@ -1,4 +1,4 @@
-Django maillings
+Django CBMail
 ================
 
 |Build Status| |Codacy Badge| |Coverage Status| |BCH compliance|
@@ -19,7 +19,7 @@ To install the app run :
 
 .. code:: shell
 
-    pip install django-mailings
+    pip install django-cbmail
 
 or add it to the list of requirements of your project.
 
@@ -30,7 +30,7 @@ Use the BaseMailing class to define your email like:
 
 .. code:: python
 
-    from mailings.mailings import BaseMailing
+    from cbmail.cbmail import BaseMailing
 
     class ExampleEmail(BaseMailing):
         """ """
@@ -56,7 +56,7 @@ settings:
 
     DEFAULT_FROM_EMAIL = "example@example.com"
 
-    MAILINGS = {
+    CBMAIL = {
         'DEFAULT_REPLY_TO': "examplereplyto@example.com",
         'DEFAULT_SUJECT': "Example subject",
         'BASE_URL': "https://domain.com",
@@ -84,11 +84,11 @@ projects and commercial products.
 .. _Settings reference: #settings-reference
 .. _License: #license
 
-.. |Build Status| image:: https://travis-ci.org/dipcode-software/django-mailings.svg?branch=master
-   :target: https://travis-ci.org/dipcode-software/django-mailings
+.. |Build Status| image:: https://travis-ci.org/dipcode-software/django-cbmail.svg?branch=master
+   :target: https://travis-ci.org/dipcode-software/django-cbmail
 .. |Codacy Badge| image:: https://api.codacy.com/project/badge/Grade/d01ebbe43c684d478cacc530e44633ad
-   :target: https://www.codacy.com/app/srtabs/django-mailings?utm_source=github.com&utm_medium=referral&utm_content=dipcode-software/django-mailings&utm_campaign=Badge_Grade
-.. |Coverage Status| image:: https://coveralls.io/repos/github/dipcode-software/django-mailings/badge.svg?branch=master
-   :target: https://coveralls.io/github/dipcode-software/django-mailings?branch=master
-.. |BCH compliance| image:: https://bettercodehub.com/edge/badge/dipcode-software/django-mailings?branch=master
+   :target: https://www.codacy.com/app/srtabs/django-cbmail?utm_source=github.com&utm_medium=referral&utm_content=dipcode-software/django-cbmail&utm_campaign=Badge_Grade
+.. |Coverage Status| image:: https://coveralls.io/repos/github/dipcode-software/django-cbmail/badge.svg?branch=master
+   :target: https://coveralls.io/github/dipcode-software/django-cbmail?branch=master
+.. |BCH compliance| image:: https://bettercodehub.com/edge/badge/dipcode-software/django-cbmail?branch=master
    :target: https://bettercodehub.com/

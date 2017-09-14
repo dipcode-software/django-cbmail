@@ -10,10 +10,10 @@ from setuptools import Command, find_packages, setup
 
 
 # Package meta-data.
-VERSION = __import__("mailings").__version__
-NAME = 'django-mailings'
+VERSION = __import__("cbmail").__version__
+NAME = 'django-cbmail'
 DESCRIPTION = 'Django module to easily send templated emails. '
-URL = 'https://github.com/dipcode-software/django-mailings/'
+URL = 'https://github.com/dipcode-software/django-cbmail/'
 EMAIL = 'team@dipcode.com'
 AUTHOR = 'Dipcode'
 

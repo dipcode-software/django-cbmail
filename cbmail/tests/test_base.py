@@ -1,13 +1,13 @@
 from tempfile import NamedTemporaryFile
 
+from cbmail.base import Attachment, BaseMailing
+from cbmail.mixins import MailingListMixin
 from django.test import SimpleTestCase
-from mailings.base import Attachment, BaseMailing
-from mailings.mixins import MailingListMixin
 from mock import patch
 
 
 class TestBaseObject(BaseMailing):
-    template_name = 'mailings/base.html'
+    template_name = 'cbmail/base.html'
     mail_to = [('dev', 'dev@unit.com')]
     mail_cc = ['dev@unit.com']
     mail_bcc = ['dev@unit.com']
@@ -28,7 +28,7 @@ class TestBaseObject(BaseMailing):
 
 
 class TestBaseNoInfoObject(BaseMailing):
-    template_name = 'mailings/base.html'
+    template_name = 'cbmail/base.html'
     mail_to = [('dev', 'dev@unit.com')]
     mail_cc = ['dev@unit.com']
     mail_bcc = ['dev@unit.com']
@@ -72,17 +72,17 @@ class MailingsSimpleTest(SimpleTestCase):
             ValueError, self.object.get_mail_to, '"invalid type"')
 
     def test_filter_whitelist(self):
-        with self.settings(MAILINGS={'WHITELIST': ['a@unit.c', 'b@unit.c']}):
+        with self.settings(CBMAIL={'WHITELIST': ['a@unit.c', 'b@unit.c']}):
             result = BaseMailing._filter_whitelist(['a@unit.c', 'c@unit.c'])
         self.assertEqual(result, ['a@unit.c'])
 
     def test_filter_whitelist_not_defined(self):
-        with self.settings(MAILINGS={}):
+        with self.settings(CBMAIL={}):
             result = BaseMailing._filter_whitelist(['a@unit.c', 'c@unit.c'])
         self.assertEqual(result, ['a@unit.c', 'c@unit.c'])
 
     def test_filter_whitelist_empty(self):
-        with self.settings(MAILINGS={'WHITELIST': ['a@unit.c', 'b@unit.c']}):
+        with self.settings(CBMAIL={'WHITELIST': ['a@unit.c', 'b@unit.c']}):
             result = BaseMailing._filter_whitelist(['c@unit.c', 'd@unit.c'])
         self.assertEqual(result, [])
 
@@ -120,13 +120,13 @@ class MailingsSimpleTest(SimpleTestCase):
 
     def test_get_template_name(self):
         result = self.object.get_template_name()
-        self.assertEqual(result, 'mailings/base.html')
+        self.assertEqual(result, 'cbmail/base.html')
 
     def test_get_base_url(self):
         result = self.object.get_base_url()
         self.assertEqual(result, 'https://domain.com')
 
-    @patch('mailings.base.loader.render_to_string')
+    @patch('cbmail.base.loader.render_to_string')
     def test_render(self, render_to_string):
         render_to_string.return_value = "dummy"
         result = self.object.render()
@@ -138,9 +138,9 @@ class MailingsSimpleTest(SimpleTestCase):
                 'subject': self.object.get_subject()
             })
 
-    @patch('mailings.base.loader.render_to_string')
+    @patch('cbmail.base.loader.render_to_string')
     def test_render_extra_data(self, render_to_string):
-        with self.settings(MAILINGS={
+        with self.settings(CBMAIL={
                 'EXTRA_DATA': {'dummy_key': 'dummy_value'}}):
             render_to_string.return_value = "dummy"
             result = self.object.render()
@@ -153,11 +153,11 @@ class MailingsSimpleTest(SimpleTestCase):
                     'dummy_key': 'dummy_value'
                 })
 
-    @patch('mailings.base.get_connection')
+    @patch('cbmail.base.get_connection')
     def test_get_send_empty(self, get_connection):
         self.assertEqual(self.object.send([]), 0)
 
-    @patch('mailings.base.get_connection')
+    @patch('cbmail.base.get_connection')
     def test_get_send(self, get_connection):
         self.object.send(['dev@unit.com'])
         get_connection().send_messages.assert_called_once()

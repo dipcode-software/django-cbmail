@@ -1,11 +1,11 @@
 from __future__ import unicode_literals
 
+from cbmail.conf import settings
 from django.conf import settings as dj_settings
 from django.core.mail import get_connection
 from django.core.mail.message import EmailMultiAlternatives
 from django.template import loader
 from django.utils.html import strip_tags
-from mailings.conf import settings
 
 
 class BaseMailing(object):

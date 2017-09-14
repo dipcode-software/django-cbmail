@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from cbmail.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.test import SimpleTestCase
-from mailings.conf import settings
 
 
 class MailingsSettingsTest(SimpleTestCase):
@@ -16,10 +16,10 @@ class MailingsSettingsTest(SimpleTestCase):
         self.assertEqual(settings.WHITELIST, [])
 
     def test_getattr_user(self):
-        with self.settings(MAILINGS={'BASE_URL': 'https://domain.com'}):
+        with self.settings(CBMAIL={'BASE_URL': 'https://domain.com'}):
             self.assertEqual(settings.BASE_URL, 'https://domain.com')
 
     def test_check_settings(self):
-        with self.settings(MAILINGS={}):
+        with self.settings(CBMAIL={}):
             with self.assertRaises(ImproperlyConfigured):
                 settings.check_settings()

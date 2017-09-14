@@ -1,5 +1,5 @@
 [run]
-source=mailings/
+source=cbmail/
 branch=True
 omit=
     *tests*

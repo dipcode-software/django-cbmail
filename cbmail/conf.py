@@ -5,6 +5,8 @@ from django.conf import settings as dj_settings
 from django.core.exceptions import ImproperlyConfigured
 
 
+APP_NAME = 'CBMAIL'
+
 DEFAULTS = {
     'DEFAULT_REPLY_TO': 'examplereplyto@example.com',
     'DEFAULT_SUJECT': 'Example subject',
@@ -30,7 +32,7 @@ class MailingsSettings(object):
 
     @property
     def user_settings(self):
-        return getattr(dj_settings, 'MAILINGS', {})
+        return getattr(dj_settings, APP_NAME, {})
 
     def __getattr__(self, attr):
         """ """

@@ -8,7 +8,7 @@ from django.template import loader
 from django.utils.html import strip_tags
 
 
-class BaseMailing(object):
+class BaseMail(object):
     """
     This class represents the base of a templated email
     TODO: add prefix support to subject
@@ -49,7 +49,7 @@ class BaseMailing(object):
             raise ValueError(
                 'object_or_list must be object with get_mailing_list method '
                 'defined or list instance.')
-        return BaseMailing._filter_whitelist(object_or_list)
+        return BaseMail._filter_whitelist(object_or_list)
 
     def get_mail_cc(self):
         """ Returns the list of emails to be used on cc email field """

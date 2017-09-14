@@ -1,12 +1,12 @@
 from tempfile import NamedTemporaryFile
 
-from cbmail.base import Attachment, BaseMailing
+from cbmail.base import Attachment, BaseMail
 from cbmail.mixins import MailingListMixin
 from django.test import SimpleTestCase
 from mock import patch
 
 
-class TestBaseObject(BaseMailing):
+class TestBaseObject(BaseMail):
     template_name = 'cbmail/base.html'
     mail_to = [('dev', 'dev@unit.com')]
     mail_cc = ['dev@unit.com']
@@ -27,7 +27,7 @@ class TestBaseObject(BaseMailing):
         return [att]
 
 
-class TestBaseNoInfoObject(BaseMailing):
+class TestBaseNoInfoObject(BaseMail):
     template_name = 'cbmail/base.html'
     mail_to = [('dev', 'dev@unit.com')]
     mail_cc = ['dev@unit.com']
@@ -73,17 +73,17 @@ class MailingsSimpleTest(SimpleTestCase):
 
     def test_filter_whitelist(self):
         with self.settings(CBMAIL={'WHITELIST': ['a@unit.c', 'b@unit.c']}):
-            result = BaseMailing._filter_whitelist(['a@unit.c', 'c@unit.c'])
+            result = BaseMail._filter_whitelist(['a@unit.c', 'c@unit.c'])
         self.assertEqual(result, ['a@unit.c'])
 
     def test_filter_whitelist_not_defined(self):
         with self.settings(CBMAIL={}):
-            result = BaseMailing._filter_whitelist(['a@unit.c', 'c@unit.c'])
+            result = BaseMail._filter_whitelist(['a@unit.c', 'c@unit.c'])
         self.assertEqual(result, ['a@unit.c', 'c@unit.c'])
 
     def test_filter_whitelist_empty(self):
         with self.settings(CBMAIL={'WHITELIST': ['a@unit.c', 'b@unit.c']}):
-            result = BaseMailing._filter_whitelist(['c@unit.c', 'd@unit.c'])
+            result = BaseMail._filter_whitelist(['c@unit.c', 'd@unit.c'])
         self.assertEqual(result, [])
 
     def test_get_mail_cc(self):

@@ -26,13 +26,13 @@ or add it to the list of requirements of your project.
 Example usage
 -------------
 
-Use the BaseMailing class to define your email like:
+Create a mails.py and use the BaseMail class to define your email like:
 
 .. code:: python
 
-    from cbmail.cbmail import BaseMailing
+    from cbmail.base import BaseMail
 
-    class ExampleEmail(BaseMailing):
+    class ExampleEmail(BaseMail):
         """ """
         template_name = "myapp/mails/myemail.html"
         subject = "Example subject of email"

@@ -1,7 +1,7 @@
 Django CBMail
 ================
 
-|Build Status| |Codacy Badge| |Coverage Status| |BCH compliance|
+|Pypi| |Build Status| |Codacy Badge| |Coverage Status| |BCH compliance|
 
 Django module to easily send templated emails in a DRY way using
 classes, just like Class Based Views.
@@ -84,6 +84,8 @@ projects and commercial products.
 .. _Settings reference: #settings-reference
 .. _License: #license
 
+.. |Pypi| image:: https://img.shields.io/pypi/v/django-cbmail.svg?style=flat-square
+   :target: https://pypi.python.org/pypi/django-cbmail
 .. |Build Status| image:: https://travis-ci.org/dipcode-software/django-cbmail.svg?branch=master
    :target: https://travis-ci.org/dipcode-software/django-cbmail
 .. |Codacy Badge| image:: https://api.codacy.com/project/badge/Grade/d01ebbe43c684d478cacc530e44633ad

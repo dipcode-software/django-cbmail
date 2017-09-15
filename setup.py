@@ -12,7 +12,7 @@ from setuptools import Command, find_packages, setup
 # Package meta-data.
 VERSION = __import__("cbmail").__version__
 NAME = 'django-cbmail'
-DESCRIPTION = 'Django module to easily send templated emails. '
+DESCRIPTION = 'Django module to easily send templated emails in a DRY way'
 URL = 'https://github.com/dipcode-software/django-cbmail/'
 EMAIL = 'team@dipcode.com'
 AUTHOR = 'Dipcode'
@@ -83,12 +83,16 @@ setup(
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
+        'Framework :: Django :: 1.10',
         'Framework :: Django :: 1.11',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ],
     cmdclass={
         'publish_dev': DevelopmentPublishCommand,

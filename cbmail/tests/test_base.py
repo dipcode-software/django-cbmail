@@ -17,7 +17,7 @@ class TestBaseObject(BaseMail):
 
     def get_attachments(self):
         f = NamedTemporaryFile()
-        f.write('unit test')
+        f.write(b'unit test')
         f.seek(0)
         attachment = open(f.name, 'rb')
         att = Attachment(

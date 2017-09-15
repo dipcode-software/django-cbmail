@@ -1,4 +1,7 @@
+include AUTHORS.md
+include CHANGELOG.md
+include CODE_OF_CONDUCT.md
 include LICENSE
 include MANIFEST.in
-include README.md
+include README.rst
 recursive-include cbmail/templates *

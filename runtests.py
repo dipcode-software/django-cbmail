@@ -12,7 +12,7 @@ settings.configure(
     ),
     CBMAIL={
         'DEFAULT_REPLY_TO': "replyto@unittest.com",
-        'DEFAULT_SUJECT': "Unit test default",
+        'DEFAULT_SUBJECT': "Unit test default",
         'BASE_URL': "https://domain.com",
     },
     DEFAULT_FROM_EMAIL="unit@unit.com",

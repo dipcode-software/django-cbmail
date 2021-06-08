@@ -58,7 +58,7 @@ settings:
 
     CBMAIL = {
         'DEFAULT_REPLY_TO': "examplereplyto@example.com",
-        'DEFAULT_SUJECT': "Example subject",
+        'DEFAULT_SUBJECT': "Example subject",
         'BASE_URL': "https://domain.com",
         'EXTRA_DATA': {},
         'WHITELIST': []

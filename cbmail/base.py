@@ -80,11 +80,11 @@ class BaseMail(object):
     def get_subject(self):
         """
         Returns the subject to be used on the subject email field
-        If one is not provided it will get the DEFAULT_SUJECT setting
+        If one is not provided it will get the DEFAULT_SUBJECT setting
         """
         if self.subject:
             return self.subject
-        return settings.DEFAULT_SUJECT
+        return settings.DEFAULT_SUBJECT
 
     def get_template_name(self):
         """ Returns the template name to be used to render the email """
